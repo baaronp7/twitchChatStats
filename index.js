@@ -81,19 +81,22 @@ client.on("chat", function(channel, user, message, self) {
         var User = model;
         usern = user['username'];
         User.findOne({username: usern}, (err, foundUser) => {
-            if(foundUser) {
-                console.log("user was found");
-                foundUser.messageCount += 1;
-                foundUser.messages.push(message);
-                foundUser.subscribed = user['subscriber'];
-                foundUser.save();
-                console.log("user was updated");
-            } else {
-                var myUser = new User(JSON.parse('{"username":"' + user['username'] + '","displayName":"' + user['display-name'] + '","subscribed":"' + user['subscriber'] + '","messageCount":1,"messages":["' + message + '"]}'));
-                myUser.save(function (err, user) {
-                    if (err) return console.error(user);
-                    console.log("Saved");
-                }); 
+            if(!self) {
+                if(foundUser) {
+                    console.log("user was found");
+                    foundUser.messageCount += 1;
+                    foundUser.messages.push(JSON.parse('{"message": "' + message + '", "messageDate":"' + new Date() + '"}'));
+                    foundUser.subscribed = user['subscriber'];
+                    foundUser.save();
+                    console.log("user was updated");
+                } else {
+                    console.log('{"username":"' + user['username'] + '","displayName":"' + user['display-name'] + '","subscribed":"' + user['subscriber'] + '","messageCount":1,"messages":[{"message": "' + message + '", "messageDate":' + new Date() + '}]}');
+                    var myUser = new User(JSON.parse('{"username":"' + user['username'] + '","displayName":"' + user['display-name'] + '","subscribed":"' + user['subscriber'] + '","messageCount":1,"messages":[{"message": "' + message + '", "messageDate":"' + new Date() + '"}]}'));
+                    myUser.save(function (err, user) {
+                        if (err) return console.error(user);
+                        console.log("Saved");
+                    }); 
+                }
             }
         });
         client.action("akabennyp", "Whats up " + user['display-name']);
