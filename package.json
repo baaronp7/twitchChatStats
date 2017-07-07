@@ -1,0 +1,24 @@
+{
+  "name": "twitch-chat-chart",
+  "version": "1.0.0",
+  "description": "Charting Twitch Chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Twitch",
+    "Chat",
+    "Chart"
+  ],
+  "author": "Benjamin Penton baaronp7@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "express-partial": "^0.1.0",
+    "irc": "^0.5.2",
+    "irc-client": "0.0.2",
+    "tmi.js": "^1.2.1"
+  }
+}
