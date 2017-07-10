@@ -1,0 +1,14 @@
+{
+    "options": {
+        "debug": true
+    },
+    "conncetions": {
+        "cluster": "aws",
+        "reconnect": true
+    },
+    "identity": {
+        "username": "AKABennyBot",
+        "password": "oauth:c4peosshgsvjpsjqqsa8nve1f5ditg"
+    },
+    "channels": ["akabennyp"]
+}
