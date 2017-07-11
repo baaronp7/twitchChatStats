@@ -16,7 +16,7 @@ var channelSchema = mongoose.Schema(
 
 exports.channelModel = mongoose.model('Channel', channelSchema);
 
-var schemaDef = {
+var viewerSchemaDef = {
     _channel: { type: String, ref: 'Channel' },
     username: {
         type: String,
@@ -41,11 +41,11 @@ var schemaDef = {
     }
 };
 
-var schema = mongoose.Schema(
-    schemaDef
+var viewerSchema = mongoose.Schema(
+    viewerSchemaDef
 );
 
-exports.model = mongoose.model('Users', schema);
+exports.viewerModel = mongoose.model('Users', viewerSchema);
 
 var modSchemaDef = {
     _channel: { type: String, ref: 'Channel' },

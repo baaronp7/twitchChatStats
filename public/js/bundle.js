@@ -7783,18 +7783,18 @@ module.exports = lowPriorityWarning;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony export (immutable) */ __webpack_exports__["a"] = getUsers;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getViewers;
 
 
-const Get_USERS = 'getUsers';
-/* harmony export (immutable) */ __webpack_exports__["b"] = Get_USERS;
+const Get_VIEWERS = 'getViewers';
+/* harmony export (immutable) */ __webpack_exports__["b"] = Get_VIEWERS;
 
 
-function getUsers() {
-    const request = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/users");
-    console.log(request);
+function getViewers() {
+    const request = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/viewers");
+
     return {
-        type: Get_USERS,
+        type: Get_VIEWERS,
         payload: request
     };
 }
@@ -13383,12 +13383,12 @@ const ConnectedApp = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_react_red
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Users__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Viewers__ = __webpack_require__(144);
 
 
 
 const rootReducer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* combineReducers */])({
-  users: __WEBPACK_IMPORTED_MODULE_1__Users__["a" /* default */]
+  viewers: __WEBPACK_IMPORTED_MODULE_1__Viewers__["a" /* default */]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = rootReducer;
@@ -14314,10 +14314,9 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 /* harmony default export */ __webpack_exports__["a"] = function (state = {}, action) {
     switch (action.type) {
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* Get_USERS */]:
-            console.log(action.payload.data);
-            const users = action.payload.data;
-            return users;
+        case __WEBPACK_IMPORTED_MODULE_0__actions__["b" /* Get_VIEWERS */]:
+            const viewers = action.payload.data;
+            return viewers;
         default:
             return state;
     }
@@ -31394,7 +31393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8_redux__["a" /* createStore */])(__WEBPACK_IMPORTED_MODULE_5__reducers_index_js__["a" /* default */], __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8_redux__["b" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_6_redux_promise___default.a), window.PROPS);
-store.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_index_js__["a" /* getUsers */])());
+store.dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__actions_index_js__["a" /* getViewers */])());
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_3_react_redux__["a" /* Provider */],

@@ -6,9 +6,9 @@ var client = new tmi.client(config);
 
 var Channel = mainModel.channelModel;
 var Mod = mainModel.modModel;
-var Viewers = mainModel.model;
+var Viewers = mainModel.viewerModel;
 
-exports.connect = function() {
+exports.connect = function(channelName) {
     client.connect();
 
     var channelObj;
@@ -16,13 +16,13 @@ exports.connect = function() {
     client.on("connected", function(address, port) {
         async.waterfall([
             function(callback) {
-                Channel.findOne({ 'name': config.channels[0]}).exec( (err, foundChannel) => {
+                Channel.findOne({ 'name': channelName }).exec( (err, foundChannel) => {
                     if(foundChannel) {
                         console.log("Channel " + foundChannel.name + " already exist");
                         channelObj = foundChannel;
                         callback(null, foundChannel.name);
                     } else {
-                        var myChannel = new Channel({ name: config.channels[0] });
+                        var myChannel = new Channel({ name: channelName });
                         myChannel.save(function (err, channel) {
                             if (err) return console.error(err);
                             console.log("Saved Channel "  + channel.name);
@@ -33,7 +33,7 @@ exports.connect = function() {
                 });
             },
             function(channel, callback) {
-                client.mods(config.channels[0]).then(function(data) {
+                client.mods(channelName).then(function(data) {
                     async.eachSeries(data, function iteratee(mod, callback2) {
                         Mod.findOne({ 'username': mod }).populate('_channel').exec( (err, foundUser) => {
                             if(foundUser) {
@@ -57,13 +57,13 @@ exports.connect = function() {
                 });
             }
         ], function(err, result) {
-            client.action(config.channels[0], result);
+            client.action(channelName, result);
         });
     });
 
     client.on("chat", function(channel, user, message, self) {
         if(message == "!twitter") {
-            client.action(config.channels[0], "www.twitter.com/AKABennyP");
+            client.action(channelName, "www.twitter.com/AKABennyP");
         }
         else {
             usern = user['username'];
@@ -72,8 +72,8 @@ exports.connect = function() {
                     if(foundUser) {
                         console.log("Viewer " + foundUser.username + " was found");
                         foundUser.messageCount += 1;
-                        //this isnt saving correctly
-                        foundUser.messages.push({message: escape(message), messageDate: new Date()});
+                        var msgObj = {message: escape(message), messageDate: new Date().toUTCString()};
+                        foundUser.messages.push(msgObj);
                         foundUser.subscribed = user['subscriber'];
                         foundUser.save();
                         console.log("Viewer " + foundUser.username + " was updated for chanel "  + foundUser._channel.name);
@@ -85,7 +85,7 @@ exports.connect = function() {
                             subscribed: user['subscriber'],
                             messageCount: 1,
                             messages: [
-                                {message: escape(message), messageDate: new Date()}
+                                {message: escape(message), messageDate: new Date().toUTCString()}
                             ]
                         });
                         myUser.save(function (err, user) {

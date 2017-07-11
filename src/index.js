@@ -5,11 +5,11 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom';
 import rootReducer from './reducers/index.js';
 import promiseMiddleware from 'redux-promise';
-import { getUsers } from './actions/index.js';
+import { getViewers } from './actions/index.js';
 import { createStore, applyMiddleware } from 'redux';
 
 var store = createStore(rootReducer, applyMiddleware(promiseMiddleware), window.PROPS);
-store.dispatch(getUsers());
+store.dispatch(getViewers());
 
 ReactDOM.render(
     <Provider store={store}>

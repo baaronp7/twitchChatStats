@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-export const Get_USERS = 'getUsers';
+export const Get_VIEWERS = 'getViewers';
 
-export function getUsers() {      
-    const request = axios.get("/users");
-    console.log(request);
+export function getViewers() {      
+    const request = axios.get("/viewers");
+
     return {
-        type: Get_USERS,
+        type: Get_VIEWERS,
         payload: request
     }
 }
