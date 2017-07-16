@@ -6,6 +6,7 @@ var channelSchemaDef = {
         index: true,
         label: 'Username'
     },
+    activeChannel: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ActiveChannel' }],
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
     mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mods' }]
 };
@@ -15,6 +16,21 @@ var channelSchema = mongoose.Schema(
 );
 
 exports.channelModel = mongoose.model('Channel', channelSchema);
+
+var activeChannelSchemaDef = {
+    _channel: { type: String, ref: 'Channel' },
+    name: {
+        type: String,
+        index: true,
+        label: 'Username'
+    },
+};
+
+var activeChannelSchema = mongoose.Schema(
+    activeChannelSchemaDef
+);
+
+exports.activeChannelModel = mongoose.model('ActiveChannel', activeChannelSchema);
 
 var viewerSchemaDef = {
     _channel: { type: String, ref: 'Channel' },

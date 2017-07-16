@@ -52,7 +52,7 @@ exports.connect = function(channelName) {
                         callback2();
                     }, function done() {
                         console.log("Mods Updated");
-                        callback(null, "Whats up chat");
+                        //callback(null, "Whats up chat");
                     });
                 });
             }
