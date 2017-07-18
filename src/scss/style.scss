@@ -24,23 +24,26 @@ div#app {
     display: grid;
 
     div.navContainer {
-        a.btn-default {
+        button.btn-default {
             width: 100%;
             border-radius: 0;
             border: 0;
-            border-bottom: 1px #333 solid;
+            border-bottom: 3px #333 solid;
             text-align: left;
             font-weight: bold;
+            outline: none;
 
             &:hover {
                 box-shadow: none;
                 background-color: #fff;
+                border: 0;
                 border-bottom: 3px #5bc0de solid;
             }
 
             &.active {
                 box-shadow: none;
                 background-color: #fff;
+                border: 0;
                 border-bottom: 6px #5bc0de solid;
             }
         }
@@ -61,6 +64,9 @@ div#app {
             clear: both;
             div.bar-contain {
                 margin-bottom: 20px !important;
+            }
+            span.bar-expand {
+                max-width: 100%;
             }
         }
         button.next {

@@ -27,23 +27,38 @@ class App extends React.Component {
                     "path":"/"
                 }
             },
-            page: 1
+            page: 1,
+            componentChange: false
         }
         this.prevPage = this.prevPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
+        this.navClick = this.navClick.bind(this);
+    }
+
+    navClick(e) {
+        var elemnet = $(e.currentTarget).attr('data-id');
+        var object = this.state.navElements;
+        Object.keys(object).map((keyName, keyIndex) => {
+            if(keyName == elemnet) {
+                object[keyName].active = true;
+            } else {
+                object[keyName].active = false;
+            }
+        });
+        this.setState({navElements: object, componentChange: true});
     }
 
     navagation() {
         var object = this.state.navElements;
-        var navigation = Object.keys(object).map((keyName, keyIndex) => {
-            var className = 'btn btn-default ' + (object[keyName].active ? 'active' : '');
-            return (                
-                <Link key={keyIndex} to={object[keyName].path} className={className}>{object[keyName].text}</Link>
+        var navagation = Object.keys(object).map((keyName, keyIndex) => {
+            var classes = object[keyName].active ? "btn btn-default active" : "btn btn-default";
+            return (
+                <button key={keyIndex} className={classes} data-id={keyName} onClick={this.navClick}>{object[keyName].text}</button>
             );
         });
         return (
             <div>
-                {navigation}
+                {navagation}
             </div>
         )
     }
@@ -57,35 +72,56 @@ class App extends React.Component {
         this.setState({page: this.state.page + 1});
     }
 
+    getActiveComponent() {
+        var object = this.state.navElements;
+        var activeComponent = Object.keys(object).map((keyName, keyIndex) => {
+            if(object[keyName].active) {
+                if(keyName == "topViewers") {
+                    return ( <Home page={this.state.page} refresh={this.state.componentChange}/> )
+                } else if(keyName = "searchViewers") {
+                    return ( <ViewUsers /> )
+                }
+            }
+        });
+        return (
+            <div>
+                {activeComponent}
+            </div>
+        )
+    }
+
     render() {
         let navigation = this.navagation();
         var custom = this.props.custom;
         var welcome = () => { return <h1>Welcome!</h1> };
+        var activhomeeComponent = this.getActiveComponent();
+        var home = (this.state.navElements.topViewers.active) ?
+        (<Home page={this.state.page} display={true}/>) :
+        (<Home page={this.state.page} display={false}/>);
+        var searchViewers = (this.state.navElements.searchViewers.active) ?
+        (<ViewUsers display={true}/>) :
+        (<ViewUsers display={false}/>);
         if(this.state) {
             return (
-                <Router>
-                    <div>
-                        <div className="header col-xs-12">
-                            <h1>Twitch Chat Stats</h1>
-                        </div>
-                        <div className="appContainer">
-                            <div className="navContainer col-sm-3 col-xs-12">
-                                {navigation}
-                            </div>
-                            <div className="pageContainer col-sm-9 col-xs-12">
-                                <button className="btn btn-default refresh"><span className="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
-                                <Switch>
-                                    <Route name="viewUsers" path='/users/view' component={ViewUsers}/>
-                                    <Route path='/' render={()=><Home page={this.state.page}/>}/>
-                                </Switch>
-                                <button className="btn btn-default prev" onClick={this.prevPage}>Pervious</button> <button className="btn btn-default next" onClick={this.nextPage}>Next</button>
-                            </div>
-                        </div>
-                        <script dangerouslySetInnerHTML={{
-                            __html: 'window.PROPS=' + JSON.stringify(custom)
-                        }} />
+                <div>
+                    <div className="header col-xs-12">
+                        <h1>Twitch Chat Stats</h1>
                     </div>
-                </Router>
+                    <div className="appContainer">
+                        <div className="navContainer col-sm-3 col-xs-12">
+                            {navigation}
+                        </div>
+                        <div className="pageContainer col-sm-9 col-xs-12">
+                            <button className="btn btn-default refresh"><span className="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+                                {home}
+                                {searchViewers}
+                            <button className="btn btn-default prev" onClick={this.prevPage}>Pervious</button> <button className="btn btn-default next" onClick={this.nextPage}>Next</button>
+                        </div>
+                    </div>
+                    <script dangerouslySetInnerHTML={{
+                        __html: 'window.PROPS=' + JSON.stringify(custom)
+                    }} />
+                </div>
             );
         }
         else {

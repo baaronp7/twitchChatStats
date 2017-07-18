@@ -63,7 +63,7 @@ exports.connect = function(channelName) {
 
     client.on("chat", function(channel, user, message, self) {
         if(message == "!twitter") {
-            client.action(channelName, "www.twitter.com/AKABennyP");
+            //client.action(channelName, "www.twitter.com/AKABennyP");
         }
         else {
             usern = user['username'];

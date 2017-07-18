@@ -8,9 +8,25 @@ class ViewUsers extends React.Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.display != this.props.display)
+            return true;
+        else
+            return false;
+    }
+
     render() {
+        var divStyle =  {
+            display: this.props.display ? 'block' : 'none'
+        };
         return (
-            <div>Users</div>
+            <div style={divStyle}>
+                <label>Search for Twitch ID</label>
+                <input className="form-control" value="" placeholder="Twitch ID"/>
+                <button className="channelSubmit btn btn-info">Search</button> 
+            </div>
         );
     }
 }
+
+export default ViewUsers

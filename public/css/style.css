@@ -19,20 +19,23 @@ h3 {
 
 div#app {
   display: grid; }
-  div#app div.navContainer a.btn-default {
+  div#app div.navContainer button.btn-default {
     width: 100%;
     border-radius: 0;
     border: 0;
-    border-bottom: 1px #333 solid;
+    border-bottom: 3px #333 solid;
     text-align: left;
-    font-weight: bold; }
-    div#app div.navContainer a.btn-default:hover {
+    font-weight: bold;
+    outline: none; }
+    div#app div.navContainer button.btn-default:hover {
       box-shadow: none;
       background-color: #fff;
+      border: 0;
       border-bottom: 3px #5bc0de solid; }
-    div#app div.navContainer a.btn-default.active {
+    div#app div.navContainer button.btn-default.active {
       box-shadow: none;
       background-color: #fff;
+      border: 0;
       border-bottom: 6px #5bc0de solid; }
   div#app div.pageContainer {
     max-width: 1280px;
@@ -47,6 +50,8 @@ div#app {
       clear: both; }
       div#app div.pageContainer div.barContainer div.bar-contain {
         margin-bottom: 20px !important; }
+      div#app div.pageContainer div.barContainer span.bar-expand {
+        max-width: 100%; }
     div#app div.pageContainer button.next {
       float: right; }
 
