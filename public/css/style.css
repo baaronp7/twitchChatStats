@@ -52,6 +52,14 @@ div#app {
         margin-bottom: 20px !important; }
       div#app div.pageContainer div.barContainer span.bar-expand {
         max-width: 100%; }
+    div#app div.pageContainer div.searchContainer input.form-control {
+      clear: both;
+      width: 75%;
+      float: left; }
+    div#app div.pageContainer div.searchContainer button.viewerSearch {
+      width: 20%;
+      margin-left: 5%;
+      float: left; }
     div#app div.pageContainer button.next {
       float: right; }
 

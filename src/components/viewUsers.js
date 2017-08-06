@@ -17,13 +17,14 @@ class ViewUsers extends React.Component {
 
     render() {
         var divStyle =  {
-            display: this.props.display ? 'block' : 'none'
+            display: this.props.display ? 'block' : 'none',
+            minHeight: 300
         };
         return (
-            <div style={divStyle}>
+            <div className="searchContainer" style={divStyle}>
                 <label>Search for Twitch ID</label>
                 <input className="form-control" value="" placeholder="Twitch ID"/>
-                <button className="channelSubmit btn btn-info">Search</button> 
+                <button className="viewerSearch btn btn-info">Search</button> 
             </div>
         );
     }

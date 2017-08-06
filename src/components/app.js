@@ -28,11 +28,12 @@ class App extends React.Component {
                 }
             },
             page: 1,
-            componentChange: false
+            refresh: false
         }
         this.prevPage = this.prevPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.navClick = this.navClick.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     navClick(e) {
@@ -45,7 +46,7 @@ class App extends React.Component {
                 object[keyName].active = false;
             }
         });
-        this.setState({navElements: object, componentChange: true});
+        this.setState({navElements: object});
     }
 
     navagation() {
@@ -72,63 +73,40 @@ class App extends React.Component {
         this.setState({page: this.state.page + 1});
     }
 
-    getActiveComponent() {
-        var object = this.state.navElements;
-        var activeComponent = Object.keys(object).map((keyName, keyIndex) => {
-            if(object[keyName].active) {
-                if(keyName == "topViewers") {
-                    return ( <Home page={this.state.page} refresh={this.state.componentChange}/> )
-                } else if(keyName = "searchViewers") {
-                    return ( <ViewUsers /> )
-                }
-            }
-        });
-        return (
-            <div>
-                {activeComponent}
-            </div>
-        )
+    refresh(e) {
+        window.location.reload();
     }
 
     render() {
         let navigation = this.navagation();
         var custom = this.props.custom;
-        var welcome = () => { return <h1>Welcome!</h1> };
-        var activhomeeComponent = this.getActiveComponent();
         var home = (this.state.navElements.topViewers.active) ?
         (<Home page={this.state.page} display={true}/>) :
         (<Home page={this.state.page} display={false}/>);
         var searchViewers = (this.state.navElements.searchViewers.active) ?
         (<ViewUsers display={true}/>) :
         (<ViewUsers display={false}/>);
-        if(this.state) {
-            return (
-                <div>
-                    <div className="header col-xs-12">
-                        <h1>Twitch Chat Stats</h1>
-                    </div>
-                    <div className="appContainer">
-                        <div className="navContainer col-sm-3 col-xs-12">
-                            {navigation}
-                        </div>
-                        <div className="pageContainer col-sm-9 col-xs-12">
-                            <button className="btn btn-default refresh"><span className="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
-                                {home}
-                                {searchViewers}
-                            <button className="btn btn-default prev" onClick={this.prevPage}>Pervious</button> <button className="btn btn-default next" onClick={this.nextPage}>Next</button>
-                        </div>
-                    </div>
-                    <script dangerouslySetInnerHTML={{
-                        __html: 'window.PROPS=' + JSON.stringify(custom)
-                    }} />
+        return (
+            <div>
+                <div className="header col-xs-12">
+                    <h1>Twitch Chat Stats</h1>
                 </div>
-            );
-        }
-        else {
-            return (
-                <div>Loading...</div>
-            );
-        }
+                <div className="appContainer">
+                    <div className="navContainer col-sm-3 col-xs-12">
+                        {navigation}
+                    </div>
+                    <div className="pageContainer col-sm-9 col-xs-12">
+                        <button className="btn btn-default refresh" onClick={() => { this.refresh() }}><span className="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+                            {home}
+                            {searchViewers}
+                        <button className="btn btn-default prev" onClick={this.prevPage}>Pervious</button> <button className="btn btn-default next" onClick={this.nextPage}>Next</button>
+                    </div>
+                </div>
+                <script dangerouslySetInnerHTML={{
+                    __html: 'window.PROPS=' + JSON.stringify(custom)
+                }} />
+            </div>
+        );
     }
 }
 

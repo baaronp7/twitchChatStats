@@ -69,6 +69,18 @@ div#app {
                 max-width: 100%;
             }
         }
+        div.searchContainer {
+            input.form-control {
+                clear: both;
+                width: 75%;
+                float: left;
+            }
+            button.viewerSearch {
+                width: 20%;
+                margin-left: 5%;
+                float: left;
+            }
+        }
         button.next {
             float: right;
         }

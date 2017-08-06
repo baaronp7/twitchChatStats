@@ -32,7 +32,6 @@ class Home extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.refresh);
         if((nextProps.display != this.props.display) || (nextProps.custom.viewers != this.props.custom.viewers) || (nextProps.page !== this.props.page) || nextState.refresh)
             return true;
         else
@@ -40,7 +39,6 @@ class Home extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("test");
         var custom = nextProps.custom;
         this.setState({channel: custom.channel, viewers: custom.viewers});
         if(custom.viewers.length > 0) {
@@ -55,8 +53,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log("test");
-        var welcome = () => { return <h1>Welcome!</h1> };
         if(!this.state.authinticated) {
             return (
                 <div>
@@ -68,7 +64,8 @@ class Home extends React.Component {
         }
         else {
             var divStyle =  {
-                display: this.props.display ? 'block' : 'none'
+                display: this.props.display ? 'block' : 'none',
+                minHeight: 300
             };
             return (
                 <div className="barContainer" style={divStyle}>

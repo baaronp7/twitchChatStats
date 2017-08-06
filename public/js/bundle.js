@@ -8189,11 +8189,12 @@ class ViewUsers extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
 
     render() {
         var divStyle = {
-            display: this.props.display ? 'block' : 'none'
+            display: this.props.display ? 'block' : 'none',
+            minHeight: 300
         };
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { style: divStyle },
+            { className: 'searchContainer', style: divStyle },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'label',
                 null,
@@ -8202,7 +8203,7 @@ class ViewUsers extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control', value: '', placeholder: 'Twitch ID' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
-                { className: 'channelSubmit btn btn-info' },
+                { className: 'viewerSearch btn btn-info' },
                 'Search'
             )
         );
@@ -13402,11 +13403,12 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 }
             },
             page: 1,
-            componentChange: false
+            refresh: false
         };
         this.prevPage = this.prevPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.navClick = this.navClick.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     navClick(e) {
@@ -13419,7 +13421,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 object[keyName].active = false;
             }
         });
-        this.setState({ navElements: object, componentChange: true });
+        this.setState({ navElements: object });
     }
 
     navagation() {
@@ -13447,92 +13449,64 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.setState({ page: this.state.page + 1 });
     }
 
-    getActiveComponent() {
-        var object = this.state.navElements;
-        var activeComponent = Object.keys(object).map((keyName, keyIndex) => {
-            if (object[keyName].active) {
-                if (keyName == "topViewers") {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__home_js__["a" /* default */], { page: this.state.page, refresh: this.state.componentChange });
-                } else if (keyName = "searchViewers") {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__viewUsers_js__["a" /* default */], null);
-                }
-            }
-        });
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            null,
-            activeComponent
-        );
+    refresh(e) {
+        window.location.reload();
     }
 
     render() {
         let navigation = this.navagation();
         var custom = this.props.custom;
-        var welcome = () => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h1',
-                null,
-                'Welcome!'
-            );
-        };
-        var activhomeeComponent = this.getActiveComponent();
         var home = this.state.navElements.topViewers.active ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__home_js__["a" /* default */], { page: this.state.page, display: true }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__home_js__["a" /* default */], { page: this.state.page, display: false });
         var searchViewers = this.state.navElements.searchViewers.active ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__viewUsers_js__["a" /* default */], { display: true }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__viewUsers_js__["a" /* default */], { display: false });
-        if (this.state) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                null,
+                { className: 'header col-xs-12' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    'Twitch Chat Stats'
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'appContainer' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'header col-xs-12' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h1',
-                        null,
-                        'Twitch Chat Stats'
-                    )
+                    { className: 'navContainer col-sm-3 col-xs-12' },
+                    navigation
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'appContainer' },
+                    { className: 'pageContainer col-sm-9 col-xs-12' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'navContainer col-sm-3 col-xs-12' },
-                        navigation
+                        'button',
+                        { className: 'btn btn-default refresh', onClick: () => {
+                                this.refresh();
+                            } },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'glyphicon glyphicon-refresh', 'aria-hidden': 'true' })
                     ),
+                    home,
+                    searchViewers,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'pageContainer col-sm-9 col-xs-12' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn btn-default refresh' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'glyphicon glyphicon-refresh', 'aria-hidden': 'true' })
-                        ),
-                        home,
-                        searchViewers,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn btn-default prev', onClick: this.prevPage },
-                            'Pervious'
-                        ),
-                        ' ',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn btn-default next', onClick: this.nextPage },
-                            'Next'
-                        )
+                        'button',
+                        { className: 'btn btn-default prev', onClick: this.prevPage },
+                        'Pervious'
+                    ),
+                    ' ',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { className: 'btn btn-default next', onClick: this.nextPage },
+                        'Next'
                     )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('script', { dangerouslySetInnerHTML: {
-                        __html: 'window.PROPS=' + JSON.stringify(custom)
-                    } })
-            );
-        } else {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                'Loading...'
-            );
-        }
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('script', { dangerouslySetInnerHTML: {
+                    __html: 'window.PROPS=' + JSON.stringify(custom)
+                } })
+        );
     }
 }
 
@@ -14498,12 +14472,10 @@ class Home extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.refresh);
         if (nextProps.display != this.props.display || nextProps.custom.viewers != this.props.custom.viewers || nextProps.page !== this.props.page || nextState.refresh) return true;else return false;
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("test");
         var custom = nextProps.custom;
         this.setState({ channel: custom.channel, viewers: custom.viewers });
         if (custom.viewers.length > 0) {
@@ -14518,14 +14490,6 @@ class Home extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     render() {
-        console.log("test");
-        var welcome = () => {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h1',
-                null,
-                'Welcome!'
-            );
-        };
         if (!this.state.authinticated) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -14544,7 +14508,8 @@ class Home extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             );
         } else {
             var divStyle = {
-                display: this.props.display ? 'block' : 'none'
+                display: this.props.display ? 'block' : 'none',
+                minHeight: 300
             };
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
