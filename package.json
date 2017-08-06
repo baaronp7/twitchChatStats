@@ -36,7 +36,8 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.1",
     "redux-promise": "^0.5.3",
-    "tmi.js": "^1.2.1"
+    "tmi.js": "^1.2.1",
+    "webpack": "2.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",
